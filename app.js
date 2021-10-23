@@ -15,9 +15,9 @@ var fs = require("fs");
 const production = process.env.NODE_ENV === "production";
 var sshKey, cert, ca, options;
 if (production) {
-  sshKey = fs.readFileSync(__dirname + "/../../ssl/tf_private.key");
-  cert = fs.readFileSync(__dirname + "/../../ssl/tf_certificate.crt");
-  ca = fs.readFileSync(__dirname + "/../../ssl/tf_ca_bundle.crt");
+  sshKey = fs.readFileSync(__dirname + "/../ssl/tf_private.key");
+  cert = fs.readFileSync(__dirname + "/../ssl/tf_certificate.crt");
+  ca = fs.readFileSync(__dirname + "/../ssl/tf_ca_bundle.crt");
   options = {
     key: sshKey,
     cert: cert,
