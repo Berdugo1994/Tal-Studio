@@ -1,0 +1,23 @@
+.modal-day-container {
+  background: #f5cac3;
+  width: 90%;
+  height: 100%;
+}
+/*
+override of fullcalendar
+*/
+.fc-theme-standard td,
+.fc-theme-standard th {
+  /* border: 1px solid red; */
+  border: 1px solid var(--fc-border-color, #f5cac3);
+  background-color: #f7ede2;
+}
+.modal-day-event-day-custom {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  height: 100%;
+}

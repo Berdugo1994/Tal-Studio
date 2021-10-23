@@ -1,0 +1,11 @@
+.edenbar-container {
+  width: 100%;
+  height: 2rem;
+  text-align: center;
+  background-color: #f7ede2;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+  margin-bottom: 0px;
+}

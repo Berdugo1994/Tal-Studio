@@ -1,0 +1,78 @@
+.event-day-custom {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  font-size: small;
+  height: 100%;
+}
+
+.event-day-train {
+  width: 100%;
+  text-align: center;
+  font-size: medium;
+  /* min-width: 200px; */
+  color: white;
+}
+.event-day-reg {
+  /* width: 49%; */
+  width: 100%;
+  text-align: center;
+  font-size: small;
+  /* min-width: 200px; */
+  color: white;
+}
+@media screen and (max-width: 330px) {
+  .event-day-train {
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 200px) {
+  .event-day-train {
+    font-size: x-small;
+  }
+  .event-day-reg {
+    font-size: x-small;
+  }
+}
+
+.training-comp {
+  background: #84a59d;
+  border: 2px solid white;
+}
+.training-comp:hover {
+  background: #f28482;
+}
+
+.training-day {
+  color: white;
+  background-color: #f4acb7;
+  border: #9d8189 solid 1px;
+}
+
+.available-day {
+  color: white;
+  background-color: #9d8189;
+  border: #9d8189 solid 1px;
+}
+
+.fc-day-today {
+  background-color: #f5cac3 !important;
+  color: white;
+}
+
+.fc-event-today {
+  /* border: 3px solid #f7b267; */
+}
+
+.full-day {
+  font-weight: bold;
+  background-color: #f7b267 !important;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: center;
+}

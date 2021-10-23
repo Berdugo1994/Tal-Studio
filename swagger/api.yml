@@ -1,0 +1,646 @@
+openapi: 3.0.3
+servers:
+  - description: API Localhost Debug
+    url: http://localhost:8080
+  - description: API Production talfekler.com
+    url: https://talfekler.com
+info:
+  description: Tal Studio API
+  version: 1.0.0
+  title: Tal Studio
+  contact:
+    email: berdugogo@gmail.com
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+  - name: main
+    description: Landing page
+  - name: auth
+    description: Login, Register and Logout actions
+  - name: training
+    description: Trainings management
+  - name: events
+    description: Events such as available or holiday
+  - name: admin
+    description: actions that only admin can take
+  - name: user
+    description: actions that only users can take
+paths:
+  /:
+    get:
+      security:
+        - cookieAuth: []
+      tags:
+        - "main"
+      summary: "main page"
+      responses:
+        "200":
+          description: "landing page, html file"
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: '<!doctype html><html><head><meta charset=" utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="manifest" crossorigin="use-credentials" href="manifest.json"/><link rel="icon" href="/favicon.ico"/><link rel="apple-touch-icon" href="/logo192.png"/><title>React App</title><link href="/static/css/main.f42ca809.chunk.css" rel="stylesheet"></head><body dir="rtl"><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div><script>!function(e){function t(t){for(var n,i,a=t[0],c=t[1],l=t[2],s=0,p=[];s<a.length;s++)i=a[s],Object.prototype.hasOwnProperty.call(o,i)&&o[i]&&p.push(o[i][0]),o[i]=0;for(n in c)Object.prototype.hasOwnProperty.call(c,n)&&(e[n]=c[n]);for(f&&f(t);p.length;)p.shift()();return u.push.apply(u,l||[]),r()}function r(){for(var e,t=0;t<u.length;t++){for(var r=u[t],n=!0,a=1;a<r.length;a++){var c=r[a];0!==o[c]&&(n=!1)}n&&(u.splice(t--,1),e=i(i.s=r[0]))}return e}var n={},o={1:0},u=[];function i(t){if(n[t])return n[t].exports;var r=n[t]={i:t,l:!1,exports:{}};return e[t].call(r.exports,r,r.exports,i),r.l=!0,r.exports}i.e=function(e){var t=[],r=o[e];if(0!==r)if(r)t.push(r[2]);else{var n=new Promise((function(t,n){r=o[e]=[t,n]}));t.push(r[2]=n);var u,a=document.createElement("script");a.charset="utf-8",a.timeout=120,i.nc&&a.setAttribute("nonce",i.nc),a.src=function(e){return i.p+"static/js/"+({}[e]||e)+"."+{3:"1ebff5a9"}[e]+".chunk.js"}(e);var c=new Error;u=function(t){a.onerror=a.onload=null,clearTimeout(l);var r=o[e];if(0!==r){if(r){var n=t&&("load"===t.type?"missing":t.type),u=t&&t.target&&t.target.src;c.message="Loading chunk "+e+" failed.\n("+n+": "+u+")",c.name="ChunkLoadError",c.type=n,c.request=u,r[1](c)}o[e]=void 0}};var l=setTimeout((function(){u({type:"timeout",target:a})}),12e4);a.onerror=a.onload=u,document.head.appendChild(a)}return Promise.all(t)},i.m=e,i.c=n,i.d=function(e,t,r){i.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},i.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},i.t=function(e,t){if(1&t&&(e=i(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(i.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)i.d(r,n,function(t){return e[t]}.bind(null,n));return r},i.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return i.d(t,"a",t),t},i.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},i.p="/",i.oe=function(e){throw console.error(e),e};var a=this.webpackJsonpclient=this.webpackJsonpclient||[],c=a.push.bind(a);a.push=t,a=a.slice();for(var l=0;l<a.length;l++)t(a[l]);var f=c;r()}([])</script><script src="/static/js/2.8ad071bb.chunk.js"></script><script src="/static/js/main.c71b8840.chunk.js"></script></body></html>'
+  /api/auth/login:
+    post:
+      tags:
+        - "auth"
+      summary: "User login into system"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user_login"
+            examples:
+              user_berdugogo:
+                $ref: "#/components/examples/user_login_berdugogo"
+      responses:
+        "200":
+          description: "התחברות התבצעה בהצלחה"
+          headers:
+            Set-Cookie:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: session=8dsf8esaf65c1xdf3ax2asdcz3asd
+        "401":
+          description: "פרטי התחברות שגויים"
+  /api/auth/logout:
+    post:
+      security:
+        - cookieAuth: []
+      tags:
+        - "auth"
+      summary: "logout user"
+      description: "logging out a user and deletes his cookie."
+      responses:
+        "200":
+          description: "משתמש התנתק בהצלחה"
+        "401":
+          description: "בעיה בחיבור לחשבונך. יש להתחבר שוב. (ייתכן כיהבעיה נגרמת מכך שהמשתמש איננו מחובר כבר בעת שניסה להתנתק)"
+  /api/auth/register:
+    post:
+      tags:
+        - "auth"
+      summary: "Create user"
+      description: "Added a user into the database"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/reg_user"
+            examples:
+              user_berdugogo:
+                $ref: "#/components/examples/user_full_berdugogo_reg"
+      responses:
+        "201":
+          description: "המשתמש נוצר בהצלחה. מייל נשלח."
+        "409":
+          description: "המייל שנבחר בשימוש.| הטלפון שנבחר בשימוש. יש לבחור אחר"
+  /api/auth/validatepass:
+    post:
+      tags:
+        - "auth"
+      security:
+        - cookieAuth: []
+      summary: "Validate password only, to allow Profile edit"
+      requestBody:
+        description: "the user password entered. without client check"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                password:
+                  type: string
+                  example: 123123
+      responses:
+        "200":
+          description: "סיסמה תקינה"
+        "402":
+          description: "סיסמה שגויה"
+        "401":
+          description: "בעיה בחיבור לחשבונך. יש להתחבר שוב"
+  /api/auth/logged:
+    get:
+      security:
+        - cookieAuth: []
+      tags:
+        - "auth"
+      summary: "full user details on log"
+      responses:
+        "200":
+          description: "user_full by cookie"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/reg_user"
+              examples:
+                berdugogo@gmail.com:
+                  $ref: "#/components/examples/user_full_berdugogo"
+        "401":
+          description: "בעיה בחיבור לחשבונך. יש להתחבר שוב"
+  /api/auth/updateprofile:
+    put:
+      security:
+        - cookieAuth: []
+      tags:
+        - "auth"
+      summary: "Update Profile Request by authenticated user."
+      requestBody:
+        description: JSON object to update. Same rules of register.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/reg_user"
+            examples:
+              user_berdugogo:
+                $ref: "#/components/examples/user_full_berdugogo_reg"
+      responses:
+        "200":
+          description: "updated user_full"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/reg_user"
+              examples:
+                berdugogo@gmail.com:
+                  $ref: "#/components/examples/user_full_berdugogo"
+        "400":
+          description: "אחד הפרטים שהוזן אינו תקין"
+        "401":
+          description: "בעיה בחיבור לחשבונך. יש להתחבר שוב"
+        "409":
+          description: "המייל|הטלפון שנבחר בשימוש. יש לבחור אחר"
+        "501":
+          description: "שגיאה בבסיס הנתונים, אנא נסו שנית מאוחר יותר"
+        "500":
+          description: "שגיאה בשרת, אנא נסו שנית מאוחר יותרר"
+  /api/events/available/:
+    get:
+      tags:
+        - "events"
+      summary: "get all future available trainings"
+      description: "retrieval of user trainings"
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  future:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/available"
+              examples:
+                get_available:
+                  $ref: "#/components/examples/get_available"
+          description: "available events retrieved successfully"
+        "400":
+          description: "Cannot retrieve available"
+  /api/events/personalcalendar:
+    get:
+      tags:
+        - "events"
+      summary: "get all future available trainings"
+      description: "retrieval of user trainings"
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/personalcalendar"
+              examples:
+                personalcalendar:
+                  $ref: "#/components/examples/personalcalendar"
+          description: "available events retrieved successfully"
+        "400":
+          description: "Cannot retrieve available"
+  /api/admin/available/add:
+    post:
+      tags:
+        - "admin"
+      security:
+        - cookieAuth: []
+      summary: "admin add new open trainings"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                events:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date: 
+                        type: string
+                        format: DATETIME
+              example: 
+                {
+                  events: 
+                    [
+                      date: "2021-10-31T04:00:00.000Z",
+                      date: "2021-10-31T05:00:00.000Z"
+                    ]
+                }
+      responses:
+        "201":
+          description: "האימונים הפנויים נשמרו בהצלחה"
+        "400":
+          description: "Cannot retrieve trainings"
+        "403":
+          description: "שמירת אימונים פנויים נכשלה"
+  /api/admin/next_events_dates:
+    get:
+      tags:
+        - "admin"
+      summary: "get all next events and trainings globally splited by dates"
+      responses:
+        "201":
+          content:
+            application/json:
+              examples:
+                next_events_globally_ex1:
+                  $ref: "#/components/examples/next_events_dates"
+          description: "Trainings retrieved successfully"
+        "400":
+          description: "Cannot retrieve trainings"
+  /api/user/allusers:
+    get:
+      tags:
+        - "user"
+      summary: "get all users in a filtered custom object. mainly for users to events"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/all_users"
+              examples:
+                all_users:
+                  $ref: "#/components/examples/all_users"
+          description: "Users retrieved successfully"
+  /api/user/addtraining:
+    post:
+      tags:
+        - "user"
+      summary: "A trainer action to reserve an available"
+      requestBody:
+        description: JSON object for the reservation
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/add_training"
+            examples:
+              add_available:
+                $ref: "#/components/examples/add_training"
+      responses:
+        "201":
+          description: "Training created successfully"
+        "401":
+          description: "Cannot create training"
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      name: session
+      in: cookie
+  schemas:
+    all_users:
+      type: "object"
+      properties:
+        _id:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+    reg_user:
+      type: "object"
+      properties:
+        city:
+          type: string
+        email:
+          type: string
+          format: email
+        fav_sport:
+          type: string
+        firstname:
+          type: string
+        gender:
+          type: string
+        lastname:
+          type: string
+        password:
+          type: string
+          minLength: 6
+          maxLength: 12
+        phone:
+          type: string
+          minLength: 10
+          maxLength: 10
+        sport_for_me:
+          type: string
+        training_num:
+          type: integer
+          minimum: 0
+          maximum: 7
+        zip:
+          type: integer
+          maxLength: 10
+        birthdate:
+          type: string
+          format: string
+    user_login:
+      type: "object"
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          description: "The password for login in clear text,5-10 chars, at least one number and one special character"
+          type: string
+          format: password
+          minLength: 6
+          maxLength: 12
+    training:
+      type: object
+      properties:
+        participant_ids:
+          type: array
+          items:
+            type: string
+        participant_names:
+          type: array
+          items:
+            type: string
+        title:
+          type: string
+        _id:
+          type: string
+        description:
+          type: string
+        date:
+          type: string
+          format: DATETIME
+    available:
+      type: object
+      properties:
+        _id:
+          type: string
+        date:
+          type: string
+          format: DATETIME
+        title:
+          type: string
+        description:
+          type: string
+    add_training:
+      type: object
+      properties:
+        id:
+          type: string
+        participant_ids:
+          type: array
+          items:
+            type: string
+        participant_names:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+    personalcalendar:
+      type: object
+      properties:
+        trainings:
+          type: array
+          items:
+            $ref: "#/components/schemas/training"
+        available:
+          type: object
+          properties:
+            future:
+              type: array
+              items:
+                $ref: "#/components/schemas/available"
+  examples:
+    user_full_berdugogo:
+      value:
+        role: "trainer"
+        _id: "6173232477f5772770ccc9c9"
+        city: "תל אביב - יפו"
+        firstname: "עדן"
+        lastname: "ברדוגו"
+        email: "edenjunk94@gmail.com"
+        fav_sport: "functional"
+        gender: "female"
+        phone: "0547585528"
+        sport_for_me: "hobby"
+        training_num: "5"
+        zip: "3436643"
+        birthdate: "24/10/1994"
+    user_full_berdugogo_reg:
+        value:
+          city: "תל אביב - יפו"
+          firstname: "עדן"
+          lastname: "ברדוגו"
+          email: "edenjunk94@gmail.com"
+          fav_sport: "functional"
+          gender: "female"
+          phone: "0547585528"
+          sport_for_me: "hobby"
+          training_num: 5
+          zip: "3436643"
+          birthdate: "24/10/1994"
+          password: "123123e"
+    user_login_berdugogo:
+      value:
+        email: "berdugogo@gmail.com"
+        password: "123123e"
+    next_events_globally_ex1:
+      value:
+        trainings:
+          [
+            {
+              friends_id:
+                ["61392bf7e2d376d7cc3c7834", "61392c7ce2d376d7cc3c7842"],
+              friends_names: ["טל פקלר", "עדן ברדוגו"],
+              _id: "611a8b099200d947f8fd7e8d",
+              creator_id: "be3rdugogo@gmail.com",
+              date: "2021-08-29T11:03:00.000Z",
+              description: "יומיים רצוף אימון תרחמי עלינו",
+            },
+            {
+              friends_id:
+                ["61392bf7e2d376d7cc3c7834", "61392c7ce2d376d7cc3c7842"],
+              friends_names: ["טל פקלר", "עדן ברדוגו"],
+              _id: "611a8b099200d947f8fd7e8d",
+              creator_id: "be3rdugogo@gmail.com",
+              date: "2021-08-29T11:03:00.000Z",
+              description: "יומיים רצוף אימון תרחמי עלינו",
+            },
+          ]
+        available:
+          [
+            "2021-09-05T11:03:00.000Z",
+            "2021-09-06T11:09:00.000Z",
+            "2021-09-07T11:10:00.000Z",
+            "2021-09-07T11:11:00.000Z",
+            "2021-09-07T11:12:00.000Z",
+          ]
+    get_trainings_ex1:
+      value:
+        created:
+          [
+            {
+              friends_id:
+                ["61392bf7e2d376d7cc3c7834", "61392c7ce2d376d7cc3c7842"],
+              friends_names: ["טל פקלר", "עדן ברדוגו"],
+              _id: "611a8b099200d947f8fd7e8d",
+              creator_id: "be3rdugogo@gmail.com",
+              date: "2021-08-29T11:03:00.000Z",
+              description: "יומיים רצוף אימון תרחמי עלינו",
+            },
+          ]
+        invited:
+          [
+            {
+              friends_id:
+                ["61392bf7e2d376d7cc3c7834", "61392c7ce2d376d7cc3c7842"],
+              friends_names: ["טל פקלר", "עדן ברדוגו"],
+              _id: "61199ed2f5dbc42008473ce7",
+              creator_id: "berdugogo@gmail.com",
+              date: "2021-08-28T11:03:00.000Z",
+              description: "יש לי כאב ברגל ימין. יפית מגיעה עם התינוקת",
+            },
+          ]
+    get_available:
+      value:
+        {
+          future:
+            [
+              {
+                _id: "6173477c70fc735c5004d009",
+                date: "2021-10-29T03:00:00.000Z",
+                title: "פנוי",
+                description: ""
+              },
+              {
+                _id: "617347b170fc735c5004d01d",
+                date: "2021-10-30T04:00:00.000Z",
+                title: "פנוי",
+                description: ""
+              },
+            ]
+        }
+    add_available:
+      value:
+        events:
+          [
+            { date: "2021-09-09T14:00:00.00Z" },
+            { date: "2021-09-09T15:00:00.00Z" },
+          ]
+    add_training:
+      value:
+        id: "61719de2b5674d64cc6865c3"
+
+        participant_ids:
+          [
+          "6171935d13382a0564e6945d",
+          ]
+        participant_names:
+          [
+          "עדן ברדוגו",
+          ]
+        description: ""
+    personalcalendar:
+      value:
+        trainings: 
+          [
+            {
+              participant_ids:
+                [
+                "61732aaa4675f478b083832a",
+                "6173353e8d2a5d277cdb5767"
+                ],
+              participant_names: 
+                [
+                "עדן ברדוגו",
+                "טל פקלר"
+                ],
+              title: "אימון",
+              _id: "61733690bdbd498a206c9115",
+              description": "",
+              date: "2021-10-24T04:00:00.000Z"
+            }
+          ]
+        available:
+          future:
+            [
+              {
+                _id: "617335858d2a5d277cdb5781",
+                date: "2021-10-24T03:00:00.000Z",
+                title: "פנוי",
+                description: ""
+              },
+              {
+                _id: "617335858d2a5d277cdb5783",
+                date: "2021-10-24T05:00:00.000Z",
+                title: "פנוי",
+                description: ""
+              },
+            ]
+    next_events_dates:
+      value:
+        {
+          "2021-10-24": 
+            [
+              {
+                _id: "61734a7dfa6df322148fea9c",
+                date: "2021-10-24T06:00:00.000Z",
+                title: "פנוי",
+                description: ""
+              },
+              {
+                _id: "61734a7dfa6df322148fea9d",
+                date: "2021-10-24T07:00:00.000Z",
+                title: "פנוי",
+                description: ""
+              },        
+            ],
+          "2021-10-29": [
+            {
+              _id: "6173477c70fc735c5004d009",
+              date: "2021-10-29T03:00:00.000Z",
+              title: "פנוי",
+              description: ""
+            }
+          ],
+        }
+    all_users:
+      value:
+        [
+          {
+            "_id": "613c93e1d945028b7477ed1c",
+            "firstname": "עדן",
+            "lastname": "ברדוגו",
+          },
+          {
+            "_id": "613c9483ffb833cdac9c3abc",
+            "firstname": "אביטל",
+            "lastname": "מלכה",
+          },
+        ]

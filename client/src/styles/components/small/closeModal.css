@@ -1,0 +1,27 @@
+.close-button {
+  height: 26px;
+  width: 26px;
+}
+/* #up {
+  border: 2px solid black;
+  transform: rotate(-45deg);
+  width: 6vmin;
+  background-color: black;
+  border-radius: 25px;
+  margin-left: 1%;
+}
+#down {
+  border: 2px solid black;
+  transform: rotate(45deg);
+  width: 6vmin;
+  background-color: black;
+  border-radius: 25px;
+  margin-left: 1%;
+} */
+.close-icon {
+  background-image: url("../../../res//modal/close.png");
+  width: 100%;
+  height: 26px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

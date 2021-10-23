@@ -1,0 +1,13 @@
+.event-button-container {
+  border: #f7ede2 2px solid;
+  border-radius: 10px;
+  font-size: large;
+  display: flex;
+  justify-content: space-around;
+}
+.training {
+  background: #84a59d;
+}
+.available {
+  background: #f28482;
+}

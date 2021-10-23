@@ -1,0 +1,14 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  width: 50vw;
+  height: 80vh;
+  border: 2px solid powderblue;
+}
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}

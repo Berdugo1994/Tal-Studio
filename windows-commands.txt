@@ -1,0 +1,10 @@
+forever start:
+* forever -m 5 start app.js
+
+stop forever:
+* forever list
+* kill {forver pid}
+and then kill pid
+
+find proccess on port:
+* netstat -ano | findstr :8080

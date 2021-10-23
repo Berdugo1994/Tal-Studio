@@ -1,0 +1,84 @@
+.modal-event-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f5cac3;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+.modal-event {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: xx-large;
+
+  /* background-color: #f4acb7; */
+}
+.modal-event-friend {
+  padding-top: 5px;
+  width: 30%;
+}
+.created-event-button-container {
+  width: 250px;
+  height: 80%;
+  margin-top: 5px;
+}
+
+@media screen and (max-width: 1300px) {
+  .modal-event {
+    font-size: x-large;
+  }
+  .modal-event-friend {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .modal-event {
+    font-size: x-large;
+  }
+  .created-event-button-container {
+    width: 200px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .modal-event {
+    font-size: x-large;
+  }
+  .modal-event-friend {
+    width: 90%;
+  }
+  .created-event-button-container {
+    width: 70%;
+  }
+}
+
+hr.rounded {
+  border-top: 3px solid #84a59d;
+  border-radius: 1px;
+  width: 50%;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.background-gallery-photo {
+  display: flex;
+  align-items: center;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  flex-direction: column;
+  opacity: 0.9;
+  border-radius: 12px;
+  width: 83%;
+  height: 90%;
+}
+.background-gallery-photo:hover {
+  transform: scale(
+    1.01
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}

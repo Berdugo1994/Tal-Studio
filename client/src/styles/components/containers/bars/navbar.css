@@ -1,0 +1,21 @@
+.top-navbar-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-height: 60px;
+  z-index: 2;
+  /* padding-bottom: 60px; */
+}
+.empty-to-margin {
+  z-index: 1;
+  min-height: 60px;
+}
+.top-navbar-left-container {
+  display: block;
+  position: absolute;
+  left: 0;
+}
+.instagram-container {
+  display: inline-block;
+  margin-left: 20px;
+}

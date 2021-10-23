@@ -1,0 +1,1 @@
+export const AVAILABLE_SAVED = "AVAILABLE_SAVED";
