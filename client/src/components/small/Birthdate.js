@@ -43,6 +43,7 @@ function Birthdate(props) {
             clearable
             error={props.helper.length > 0}
             maxDate={maxDate}
+            maxDateMessage={""}
             invalidDateMessage={""}
             inputVariant='outlined'
           />

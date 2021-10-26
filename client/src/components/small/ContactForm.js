@@ -29,7 +29,6 @@ function ContactForm({ contactAction }) {
     contactAction(result)
       .then((e) => {
         setDisplay("success");
-        // console.log("check");
       })
       .catch((err) => {
         setDisplay("form");

@@ -71,6 +71,12 @@ export const Values = styled.nav`
 `;
 export function UserProfileFull(props) {
   const [modalOpen, setModalOpen] = useState(false);
+  let userBirthdate =
+    props.user.birthdate.split("-")[2] +
+    "/" +
+    props.user.birthdate.split("-")[1] +
+    "/" +
+    props.user.birthdate.split("-")[0];
   return (
     <Container>
       <Labels>
@@ -89,10 +95,10 @@ export function UserProfileFull(props) {
         <LabelField>{props.user.lastname}</LabelField>
         <LabelField>{props.user.email}</LabelField>
         <LabelField>{props.user.phone}</LabelField>
-        <LabelField>{props.user.birthdate}</LabelField>
+        <LabelField>{userBirthdate}</LabelField>
         <LabelField>{userConstants.gender[props.user.gender]}</LabelField>
         <LabelField>{props.user.city}</LabelField>
-        <LabelField>{props.user.zip}</LabelField>
+        <LabelField>{props.user.zip || "-"}</LabelField>
         <LabelField>{userConstants.fav_sport[props.user.fav_sport]}</LabelField>
       </Values>
       <IconPencil

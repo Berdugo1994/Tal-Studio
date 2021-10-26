@@ -62,7 +62,6 @@ router.post(
     check("phone", "Please enter valid phone").not().isEmpty(),
     check("sport_for_me", "Please enter valid sport for me").not().isEmpty(),
     check("training_num", "Please enter valid training num").not().isEmpty(),
-    check("zip", "Please enter valid zip").not().isEmpty(),
     check("birthdate", "Please enter valid birthdate").isLength({
       min: 10,
       max: 10,
@@ -297,7 +296,6 @@ router.put(
     check("phone", "שדה פלאפון לא תקין").not().isEmpty(),
     check("sport_for_me", "שדה ספורט עבורי לא תקין").not().isEmpty(),
     check("training_num", "שדה מס' אימונים שבועיים לא תקין").not().isEmpty(),
-    check("zip", "מיקוד לא תקין").not().isEmpty(),
     check("birthdate", "תאריך לידה לא תקין").isLength({
       min: 10,
       max: 10,
@@ -334,7 +332,6 @@ router.put(
         throw err;
       });
       UserUtils.getUserById(req.user.id).then((updatedUser) => {
-        console.log(updatedUser._doc);
         res.status(200).send(cleanResultUserFields(updatedUser._doc));
       });
     } catch (err) {
