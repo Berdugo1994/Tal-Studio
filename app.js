@@ -108,6 +108,12 @@ if (production) {
   });
 }
 app.use(function (err, req, res, next) {
+  if (err.message) {
+    console.error("******************" + err.message + "******************");
+    console.error("url: " + req.url);
+    console.error("body: " + req.body);
+  }
+
   console.error(err);
   const msg = err[0] || err.message;
   res.status(err.status || 500).send(msg ? msg : "");

@@ -45,7 +45,6 @@ function ForgotComp({ setMessageAction }) {
       forgotPassword_EmailApi({ email })
         .then(() => {
           setStage("code");
-          console.log("called then");
         })
         .catch((err) => {
           setStage("start");

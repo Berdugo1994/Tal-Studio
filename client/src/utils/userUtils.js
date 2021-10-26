@@ -17,7 +17,7 @@ export function getDefaultUserField(user, value, typeOfInput) {
     }
   }
   if (typeOfInput == "birthdate") {
-    return moment(user[value], "DD-MM-YYYY");
+    return moment(user[value], "YYYY-MM-DD");
   }
 }
 export function getOptions(field) {

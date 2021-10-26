@@ -6,7 +6,6 @@ DEBUG ? (API_URL = "http://localhost:8080" + API_URL) : API_URL;
 export function requestEventsInRange() {
   const URL = API_URL + "events/personalcalendar";
   return axios.get(URL).then((data) => {
-    console.log(data);
     let events = [];
     [...data.data.trainings].map((training) => {
       events.push(handleTraining(training));

@@ -54,7 +54,7 @@ const UserSchema = new mongoose.Schema(
     },
     zip: {
       type: String,
-      required: true,
+      default: "",
     },
     birthdate: {
       type: String,

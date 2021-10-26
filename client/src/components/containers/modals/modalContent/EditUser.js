@@ -57,7 +57,6 @@ function EditUser({ updateUserAction, validatePasswordAction, user }) {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
     setStatus("loading");
     const result = filterForm(data);
     updateUserAction(result)
@@ -103,13 +102,20 @@ function EditUser({ updateUserAction, validatePasswordAction, user }) {
       setBirthdateHelper("תאריך לא תקין");
       return false;
     }
-
     var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
       monthLength[1] = 29;
     const res = day > 0 && day <= monthLength[month - 1];
     if (!res) {
       setBirthdateHelper("תאריך לא תקין");
+      return false;
+    }
+    // VALIDATE USER 16+
+    let userDate = new Date(year, month - 1, day);
+    let today = new Date();
+    let sixteenYearsMin = today.setFullYear(today.getFullYear() - 16);
+    if (userDate > sixteenYearsMin) {
+      setBirthdateHelper("גיל 16 מינימום");
       return false;
     }
     setBirthdateHelper("");
@@ -194,13 +200,8 @@ function EditUser({ updateUserAction, validatePasswordAction, user }) {
     return true;
   }
   function validateZip(zipField) {
-    if (zipField == undefined || zipField.length == 0) {
-      setZipHelper(mandatory);
-      return false;
-    }
-
-    if (zipField.length < 5 || zipField.length > 7) {
-      setZipHelper("אורך 5 עד 7 תוים");
+    if (zipField.length > 7) {
+      setZipHelper("אורך עד 7 תוים");
       return false;
     }
     setZipHelper("");
