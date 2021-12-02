@@ -4,18 +4,20 @@ import { connect } from "react-redux";
 import ButtonMaterial from "../../small/ButtonMaterial";
 import { logoutAction } from "../../../actions/auth";
 import { UserProfile, UserProfileFull } from "../../small/UserProfile";
+import Friendship from "../../small/Friendship";
 import { LoadingRings } from "../../small/Loading";
 
 //Styles
 import "../../../styles/components/containers/page_comp/profile.css";
 
-function ProfileComp({ logoutAction, user }) {
+function ProfileComp({ logoutAction, user, friendships }) {
   let profileDisplay = <LoadingRings />;
   if (user != undefined) {
     profileDisplay = (
       <>
         <UserProfile user={user} />
         <UserProfileFull id='profileFull' user={user} />
+        <Friendship />
       </>
     );
   }
@@ -36,6 +38,7 @@ function ProfileComp({ logoutAction, user }) {
 ProfileComp.propTypes = {
   logoutAction: PropTypes.func.isRequired,
   user: PropTypes.object,
+  friendships: PropTypes.object,
 };
 
 const mapStateToProps = (state, ownProps) => ({

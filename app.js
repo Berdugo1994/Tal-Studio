@@ -1,4 +1,3 @@
-var createError = require("http-errors");
 var express = require("express");
 const connectDB = require("./config/db");
 var path = require("path");
@@ -12,6 +11,7 @@ var eventRoute = require("./routes/events");
 var adminRoute = require("./routes/admin");
 var userRoute = require("./routes/user");
 var fs = require("fs");
+const error = require("./errors");
 const production = process.env.NODE_ENV === "production";
 var sshKey, cert, ca, options;
 if (production) {
@@ -79,9 +79,9 @@ app.use("/api/user", userRoute);
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
-// catch 404 and forward to error handler
+// this middleware handles undefined errors. must check.
 app.use(function (req, res, next) {
-  next(createError(404));
+  next(error.general_error_410);
 });
 if (production) {
   //HTTP LISTENS ON 80
@@ -111,7 +111,8 @@ app.use(function (err, req, res, next) {
   if (err.message) {
     console.error("******************" + err.message + "******************");
     console.error("url: " + req.url);
-    console.error("body: " + req.body);
+    console.error("body: ");
+    console.error(req.body);
   }
 
   console.error(err);

@@ -30,6 +30,9 @@ async function getAllUsersWithoutEmailAndFilter(email, filter) {
 async function getUserWithEmailAndFilter(email, filter) {
   return Users.findOne({ email: { $eq: email } }, filter);
 }
+async function getUserWithPhoneAndFilter(phone, filter) {
+  return Users.findOne({ phone: { $eq: phone } }, filter);
+}
 
 async function updateUserPasswordById(_id, password) {
   const hash = await bcrypt.hash(password, Number(process.env.salt));
@@ -38,12 +41,19 @@ async function updateUserPasswordById(_id, password) {
 async function updateById(_id, object) {
   return Users.updateOne({ _id }, object);
 }
+
+async function getFilteredByIds(ids, filter) {
+  return Users.find({ _id: { $in: ids } }, filter);
+}
+
 module.exports.getUserByEmail = getUserByEmail;
 module.exports.getUserById = getUserById;
 module.exports.getAllUsersWithoutEmailAndFilter =
   getAllUsersWithoutEmailAndFilter;
 module.exports.getUserWithEmailAndFilter = getUserWithEmailAndFilter;
+module.exports.getUserWithPhoneAndFilter = getUserWithPhoneAndFilter;
 module.exports.updateById = updateById;
 module.exports.save = save;
 module.exports.getUserByPhone = getUserByPhone;
 module.exports.updateUserPasswordById = updateUserPasswordById;
+module.exports.getFilteredByIds = getFilteredByIds;

@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ProfileComp from "../components/containers/pageComp/Profile";
 import { Redirect } from "react-router-dom";
-const ProfilePage = ({ isLogged, user }) => {
+import { friendshipsLoadAction } from "../actions/auth";
+import { useEffect } from "react";
+const ProfilePage = ({ isLogged, user, friendshipsLoadAction }) => {
   return (
     <>
       {isLogged ? (
@@ -26,4 +28,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps, {})(ProfilePage);
+export default connect(mapStateToProps, { friendshipsLoadAction })(ProfilePage);
