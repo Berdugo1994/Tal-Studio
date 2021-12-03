@@ -5,3 +5,4 @@ config/default.json
 mongoCommands.txt
 keys
 access.log
+debug.txt
