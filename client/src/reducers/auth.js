@@ -7,6 +7,8 @@ import {
   LOGGED_VALIDATE_SUCCESS,
   LOGGED_VALIDATE_FAIL,
   USER_UPDATE_SUCCEED,
+  FRIENDSHIP_LOADED_SUCCEED,
+  FRIENDSHIP_LOADED_FAIL,
 } from "../constants/authTypes";
 const loggedOnStart = localStorage.logged == "true";
 const initialState = { isLoggedIn: loggedOnStart, isAdmin: false }; // isLoggedIn is a bool type.
@@ -69,6 +71,11 @@ export default function authFunc(state = initialState, action) {
       return {
         ...state,
         user: payload.user,
+      };
+    case FRIENDSHIP_LOADED_SUCCEED:
+      return {
+        ...state,
+        friendships: payload.friendships,
       };
     default:
       return state;

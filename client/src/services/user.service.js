@@ -18,3 +18,30 @@ export async function requestAllUsers() {
     return allUsers;
   });
 }
+export async function requestFriendshipsApi() {
+  const URL = API_URL + "myfriends";
+  return axios.get(URL).then((data) => {
+    return data.data;
+  });
+}
+
+export async function respondFriendApi(respond) {
+  const URL = API_URL + "respondfriend";
+  return axios.post(URL, respond).then((data) => {
+    return data.data;
+  });
+}
+export async function deleteFriendApi(respond) {
+  console.log(respond);
+  const URL = API_URL;
+  return axios.delete(URL, { data: { ...respond } }).then((data) => {
+    return data.data;
+  });
+}
+export async function addFriendApi(request) {
+  console.log(request);
+  const URL = API_URL + "addfriend";
+  return axios.post(URL, request).then((data) => {
+    return data.data;
+  });
+}

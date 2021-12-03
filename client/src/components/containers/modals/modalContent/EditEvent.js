@@ -27,8 +27,6 @@ function ModalEditEvent({
   setMessageAction,
   handleClose,
   isAdmin,
-  userId,
-  username,
   users,
   defaultDescription,
 }) {

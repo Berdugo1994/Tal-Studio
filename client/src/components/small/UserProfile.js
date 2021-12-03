@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { userConstants } from "../../constants/user";
 import { IconPencil } from "./Icons";
 import ModalEditFields from "../containers/modals/ModalFields";
-export const Name = styled.nav`
+export const Name = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 4rem;
@@ -21,7 +21,7 @@ export function UserProfile(props) {
   );
 }
 
-export const Field = styled.nav`
+export const Field = styled.div`
   border: 2px solid green;
   border-radius: 25px;
   display: flex;
@@ -29,48 +29,58 @@ export const Field = styled.nav`
   margin-top: 1%;
 `;
 
-export const LabelField = styled.nav`
+export const LabelField = styled.div`
   width: max-content;
   margin-left: 2%;
   display: flex;
 `;
-export const ValuelField = styled.nav`
+export const ValuelField = styled.div`
   width: max-content;
 `;
 
-export const Container = styled.nav`
+export const Container = styled.div`
   display: flex;
   flex-direction: row;
   background: white;
   border-radius: 25px;
-  width: max-content;
+  width: 55%;
   padding: 2%;
   font-size: 1.5rem;
+  justify-content: space-between;
   @media screen and (max-width: 768px) {
     font-size: 1.2rem;
+    width: 75%;
   }
-  @media screen and (max-width: 400px) {
-    font-size: 0.9rem;
+  @media screen and (max-width: 450px) {
+    font-size: 1rem;
+    width: 85%;
   }
-  @media screen and (max-width: 270px) {
+  @media screen and (max-width: 340px) {
+    font-size: 0.85rem;
+    width: 90%;
+  }
+  @media screen and (max-width: 275px) {
     font-size: 0.7rem;
+    width: 95%;
   }
 `;
 
-export const Labels = styled.nav`
+export const Labels = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1%;
 `;
-export const Values = styled.nav`
+export const Values = styled.div`
   background: white;
   display: flex;
   flex-direction: column;
   margin-top: 1%;
   padding-right: 25px;
+  flex-wrap: wrap;
 `;
 export function UserProfileFull(props) {
   const [modalOpen, setModalOpen] = useState(false);
+  console.log(props.user.birthdate);
   let userBirthdate =
     props.user.birthdate.split("-")[2] +
     "/" +

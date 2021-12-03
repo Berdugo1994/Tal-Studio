@@ -15,6 +15,10 @@ import {
   CONTACT_FAIL,
   TRAINING_DELETED_SUCCESSFULLY,
   TRAINING_DELETED_FAIL,
+  FRIENDSHIP_RESPOND_SUCCESS,
+  FRIENDSHIP_RESPOND_FAIL,
+  FRIENDSHIP_REQUEST_SUCCESS,
+  FRIENDSHIP_REQUEST_FAIL,
 } from "../constants/authTypes";
 import { AVAILABLE_SAVED } from "../constants/calendar";
 const initialState = {
@@ -135,6 +139,18 @@ export default function messFunc(state = initialState, action) {
         messageContent: "האימון נמחק בהצלחה",
       };
     case TRAINING_DELETED_FAIL:
+      return {
+        ...state,
+        messageStatus: ERROR,
+        messageContent: payload.message,
+      };
+    case FRIENDSHIP_RESPOND_FAIL:
+      return {
+        ...state,
+        messageStatus: ERROR,
+        messageContent: payload.message,
+      };
+    case FRIENDSHIP_REQUEST_FAIL:
       return {
         ...state,
         messageStatus: ERROR,

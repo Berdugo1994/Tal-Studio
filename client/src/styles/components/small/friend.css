@@ -1,0 +1,10 @@
+.card-friend-container {
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  padding-top: 2%;
+  padding-right: 2%;
+}

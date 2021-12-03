@@ -26,6 +26,8 @@ tags:
     description: actions that only admin can take
   - name: user
     description: actions that only users can take
+  - name: friends
+    description: social network for taking trainings together
 paths:
   /:
     get:
@@ -310,6 +312,83 @@ paths:
           description: "Training created successfully"
         "401":
           description: "Cannot create training"
+  /api/user/addfriend:
+    post:
+      tags:
+        - "friends"
+      summary: "A trainer request to add friend"
+      requestBody:
+        description: JSON object for the friendship
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/add_friend"
+            examples:
+              add_available:
+                $ref: "#/components/examples/add_friend"
+      responses:
+        "200":
+          description: "בקשת החברות נשלחה בהצלחה"
+        "401":
+          description: "בקשת החברות נכשלה"
+  /api/user/respondfriend:
+    post:
+      tags:
+        - "friends"
+      summary: "A trainer respond to friendship request"
+      requestBody:
+        description: JSON object for the friendship respond
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/res_friend"
+            examples:
+              add_available:
+                $ref: "#/components/examples/res_friend"
+      responses:
+        "200":
+          description: "בקשת החברות (אושרה|נדחתה) בהצלחה"
+        "401":
+          description: "בקשת החברות נכשלה"
+  /api/user/myfriends:
+    get:
+      tags:
+        - "friends"
+      summary: "A trainer get friends with statuses "
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user_friends"
+              examples:
+                user_friends:
+                  $ref: "#/components/examples/user_friends"
+          description: "user friends and statuses"
+        "401":
+          description: "בקשת החברות נכשלה"
+  /api/user:
+    delete:
+      tags:
+        - "friends"
+      summary: "A trainer deletes friend"
+      requestBody:
+        description: JSON object for the friendship respond
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/friend_to_delete"
+            examples:
+              add_available:
+                $ref: "#/components/examples/friend_to_delete"
+      responses:
+        200:
+          description: "חברות בוטלה בהצלחה"
+        401:
+          description: "לא ניתן לבטל חברות אם אינכם חברים"
 
 components:
   securitySchemes:
@@ -422,6 +501,23 @@ components:
             type: string
         description:
           type: string
+    add_friend:
+      type: object
+      properties:
+        invited_phone:
+          type: string
+    res_friend:
+      type: object
+      properties:
+        friend_id:
+          type: string
+        status:
+          type: string
+    friend_to_delete:
+      type: object
+      properties:
+        friend_id:
+          type: string
     personalcalendar:
       type: object
       properties:
@@ -436,6 +532,46 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/available"
+
+    user_friends:
+      type: object
+      properties:
+        friends_approve:
+          type: array
+          items:
+            $ref: "#/components/schemas/approved_friend"
+        friends_wait_for_me:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              phone:
+                type: string
+              firstname:
+                type: string
+              lastname:
+                type: string
+        friends_wait_for_them:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              phone:
+                type: string
+    approved_friend:
+      type: object
+      properties:
+        id:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+
   examples:
     user_full_berdugogo:
       value:
@@ -644,3 +780,65 @@ components:
             "lastname": "מלכה",
           },
         ]
+    add_friend:
+      value:
+        {
+          invited_phone: "0547585528"
+        }
+    res_friend:
+      value:
+        {
+          friend_id: "6177c75e0dc9861dac47be0f",
+          status: "approve"
+        }
+    friend_to_delete:
+      value:
+        {
+          friend_id: "6177c75e0dc9861dac47be0f",
+        }
+    user_friends:
+      value:
+        {
+          friends_approve:
+            [
+              {
+                id: "2daasdasdasdasdl5151",
+                firstname: "עדן",
+                lastname: "ברדוגו"
+              },
+              {
+                id: "7859safasjkhfjk551",
+                firstname: "תומר",
+                lastname: "לוי"
+              }
+            ],
+          friends_wait_for_me:
+            [
+              {
+                id: "2daasdasdasdasdl5151",
+                phone: "0547585528",
+                firstname: "עדן",
+                lastname: "ברדוגו"
+              },
+              {
+                id: "7859safasjkhfjk551",
+                phone: "0547585128",
+                firstname: "תומר",
+                lastname: "לוי"
+              }
+            ],
+          friends_wait_for_them:
+            [
+              {    
+                _id: "6177c75e0dc9861dac47be0f",
+                phone: "0541231231"
+              }
+            ]
+        }
+    approved_friend:
+      value:
+        {
+          id: "2daasdasdasdasdl5151",
+          firstname: "עדן",
+          lastname: "ברדוגו"
+        }

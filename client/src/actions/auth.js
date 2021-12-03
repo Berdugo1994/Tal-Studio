@@ -12,6 +12,12 @@ import {
   USER_UPDATE_SUCCEED,
   CONTACT_SUCCESS,
   CONTACT_FAIL,
+  FRIENDSHIP_LOADED_SUCCEED,
+  FRIENDSHIP_LOADED_FAIL,
+  FRIENDSHIP_RESPOND_SUCCESS,
+  FRIENDSHIP_RESPOND_FAIL,
+  FRIENDSHIP_REQUEST_SUCCESS,
+  FRIENDSHIP_REQUEST_FAIL,
 } from "../constants/authTypes";
 
 //Actions
@@ -24,6 +30,12 @@ import {
   UpdateUserApi,
   contactApi,
 } from "../services/auth.service";
+import {
+  requestFriendshipsApi,
+  respondFriendApi,
+  deleteFriendApi,
+  addFriendApi,
+} from "../services/user.service";
 
 export const loginAction = (user) => (dispatch) => {
   return loginApi(user).then(
@@ -223,6 +235,116 @@ export const contactAction = (messageObject) => (dispatch) => {
       }
       dispatch({
         type: CONTACT_FAIL,
+        payload: payload,
+      });
+      return Promise.reject(err);
+    }
+  );
+};
+
+export const friendshipsLoadAction = () => (dispatch) => {
+  return requestFriendshipsApi().then(
+    (data) => {
+      dispatch({
+        type: FRIENDSHIP_LOADED_SUCCEED,
+        payload: { friendships: data },
+      });
+    },
+    (err) => {
+      let payload = { message: "" };
+      if (err.response && err.response.status === 403) {
+        payload.message = "עבר זמן מאז ההתחברות האחרונה.. יש להתחבר מחדש";
+      } else if (err.response && err.response.status === 404) {
+        payload.message = "לא היית מחובר. יש להתחבר מחדש";
+      } else {
+        payload.message = "בעיה בשרת. נסו להתחבר שוב מאוחר יותר";
+      }
+      dispatch({
+        type: LOGGED_VALIDATE_FAIL,
+        payload: payload,
+      });
+      return Promise.reject(err);
+    }
+  );
+};
+
+export const friendshipRespondAction = (respond) => (dispatch) => {
+  return respondFriendApi(respond).then(
+    (data) => {
+      dispatch({
+        type: FRIENDSHIP_RESPOND_SUCCESS,
+      });
+    },
+    (err) => {
+      let payload = { message: "" };
+      if (err.response && err.response.status === 403) {
+        payload.message = "עבר זמן מאז ההתחברות האחרונה.. יש להתחבר מחדש";
+      } else if (err.response && err.response.status === 404) {
+        payload.message = "לא היית מחובר. יש להתחבר מחדש";
+      } else {
+        payload.message = "בעיה בשרת. נסו להתחבר שוב מאוחר יותר";
+      }
+      dispatch({
+        type: FRIENDSHIP_RESPOND_FAIL,
+        payload: payload,
+      });
+      return Promise.reject(err);
+    }
+  );
+};
+export const friendshipAddAction = (request) => (dispatch) => {
+  console.log(request);
+  return addFriendApi(request).then(
+    (data) => {
+      dispatch({
+        type: FRIENDSHIP_REQUEST_SUCCESS,
+      });
+    },
+    (err) => {
+      let payload = { message: "" };
+      console.log("we are here");
+      if (
+        (err.response && err.response.status === 402) ||
+        err.response.status === 408
+      ) {
+        console.log("we are here2");
+        console.log(err.response.data);
+        payload.message = err.response.data;
+      } else if (err.response && err.response.status === 403) {
+        payload.message = "עבר זמן מאז ההתחברות האחרונה.. יש להתחבר מחדש";
+      } else if (err.response && err.response.status === 404) {
+        payload.message = "לא היית מחובר. יש להתחבר מחדש";
+      } else {
+        payload.message = "הפעולה נכשלה";
+      }
+      dispatch({
+        type: FRIENDSHIP_REQUEST_FAIL,
+        payload: payload,
+      });
+      return Promise.reject(err);
+    }
+  );
+};
+
+export const friendshipDeleteAction = (respond) => (dispatch) => {
+  console.log(respond);
+  return deleteFriendApi(respond).then(
+    (data) => {
+      dispatch({
+        type: FRIENDSHIP_RESPOND_SUCCESS,
+      });
+    },
+    (err) => {
+      let payload = { message: "" };
+      if (err.response && err.response.status === 403) {
+        payload.message = "עבר זמן מאז ההתחברות האחרונה.. יש להתחבר מחדש";
+      } else if (err.response && err.response.status === 404) {
+        payload.message = "לא היית מחובר. יש להתחבר מחדש";
+      } else {
+        payload.message = "בעיה בשרת. נסו להתחבר שוב מאוחר יותר";
+      }
+      dispatch({
+        type: FRIENDSHIP_RESPOND_FAIL,
         payload: payload,
       });
       return Promise.reject(err);
