@@ -19,6 +19,9 @@ async function createNewFriendRequest(inviter_id, invited_id) {
 }
 
 async function respondToRequest(_id, status) {
+  if (status === "reject") {
+    return deleteFriendshipById(_id);
+  }
   return Friends.updateOne(
     { _id },
     { $set: { status, date_respond: new Date() } }
@@ -67,7 +70,6 @@ async function getUserFriends(user_id) {
   let totalFriends = await Friends.find({
     $or: [{ inviter_id: { $eq: user_id } }, { invited_id: { $eq: user_id } }],
   });
-  console.log(totalFriends);
   let friendsApprovedIds = [];
   let waitForThemIds = [];
   let waitForMeIds = [];
@@ -99,6 +101,13 @@ async function deleteFriend(user_id, friend_id) {
   return Promise.reject("No Friendship");
 }
 
+async function deleteFriendshipById(friendshipId) {
+  let friendship = await Friends.findOne(friendshipId);
+  if (friendship)
+    return friendship.remove().then(Promise.resolve("Friendship Deleted"));
+  return Promise.reject("No Friendship");
+}
+
 //Helpers
 async function findConnection(id1, id2) {
   let totalFriends = await Friends.findOne({
@@ -116,3 +125,4 @@ module.exports.validateUserReq = validateUserReq;
 module.exports.validateFriendsStatus = validateFriendsStatus;
 module.exports.getUserFriends = getUserFriends;
 module.exports.deleteFriend = deleteFriend;
+module.exports.deleteFriendshipById = deleteFriendshipById;

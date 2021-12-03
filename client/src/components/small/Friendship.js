@@ -89,15 +89,28 @@ const Friendship = ({
 }) => {
   const [friend, setFriend] = useState(null);
   const [modalStatus, setModalStatus] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
   const friendDelete = "friend-delete";
   const waitApprove = "wait-approve";
   const waitDelete = "wait-delete";
-  function loadFriendship() {
-    friendshipsLoadAction();
-  }
   useEffect(() => {
-    loadFriendship();
-  }, []);
+    if (modalStatus) return;
+    console.log("useeffect called");
+    let timeout;
+    if (!firstRender) {
+      console.log("before wait");
+      timeout = setTimeout(() => {
+        console.log("after wait");
+        friendshipsLoadAction();
+      }, 2000);
+    } else {
+      setFirstRender(false);
+      friendshipsLoadAction();
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [modalStatus]);
   function displayModal(friend, status) {
     setFriend(friend);
     setModalStatus(status);
@@ -191,29 +204,21 @@ const Friendship = ({
             modalStatus == "friend-delete"
               ? friendshipDeleteAction({
                   friend_id: friend.id,
-                }).then(() => {
-                  loadFriendship();
                 })
               : modalStatus == "wait-approve"
               ? friendshipRespondAction({
                   friend_id: friend.id,
                   status: "approve",
-                }).then(() => {
-                  console.log("wait approve here");
-                  loadFriendship();
                 })
               : modalStatus == "wait-delete"
               ? friendshipRespondAction({
                   friend_id: friend.id,
                   status: "reject",
-                }).then(() => {
-                  loadFriendship();
                 })
               : "";
             setModalStatus(false);
           }}
           discardFunc={() => {
-            console.log("canceled");
             setModalStatus(false);
           }}
         />

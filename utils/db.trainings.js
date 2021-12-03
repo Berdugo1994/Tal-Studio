@@ -17,8 +17,7 @@ async function getPastTrainingsThisMonthById(id) {
 
   return Trainings.find({
     participant_ids: { $elemMatch: { $eq: id } },
-    date: { $gte: beginOfMonth },
-    date: { $lt: new Date() },
+    date: { $gte: beginOfMonth, $lt: new Date() },
   })
     .countDocuments()
     .then((res) => {
