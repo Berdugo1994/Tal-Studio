@@ -10,7 +10,9 @@ import talface from "../../res/images/homePage/talface.png";
 const HomeContact = (props) => {
   return (
     <div className='card-about-container'>
-      <div className='card-title'> צור קשר</div>
+      <h1>
+        <div className='card-title'> צור קשר</div>
+      </h1>
       <div className='card-contact-container'>
         <div style={{ width: "70%" }}>
           <ContactForm />

@@ -7,10 +7,13 @@ import "../../styles/components/small/home.css";
 const HomeAbout = (props) => {
   return (
     <div className='card-about-container'>
-      <div className='card-title'> אודות Tal Studio</div>
+      <h1>
+        <div className='card-title'>טל סטודיו</div>
+      </h1>
       <div className='card-body'>
-        סטודיו בוטיקי, לאימונים פונקציונליים בקבוצות קטנות, אימונים אישיים,
-        זוגיים ומשולשים, ברמה הגבוהה ביותר! הסטודיו מאובזר בציוד החדשני ביותר.
+        טל פקלר מאמנת אישית. סטודיו בוטיקי, לאימונים פונקציונליים בקבוצות קטנות,
+        אימונים אישיים, זוגיים ומשולשים, ברמה הגבוהה ביותר! הסטודיו מאובזר בציוד
+        החדשני ביותר.
       </div>
       <div className='card-body'>
         באימונים תקבלו את מלואה תשומת הלב והטכניקה המדויקת. האימונים מתמקדים בכל
