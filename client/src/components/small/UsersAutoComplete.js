@@ -74,7 +74,9 @@ const mapStateToProps = (state, ownProps) => ({
   helper: ownProps.helper,
   onChange: ownProps.onChange,
   defaultValue: ownProps.defaultValue,
-  friends: state.auth.friendships.friends_approved,
+  friends: state.auth.friendships
+    ? state.auth.friendships.friends_approved
+    : null,
   isAdmin: state.auth.isAdmin,
 });
 export default connect(mapStateToProps, {})(UsersAutoComplete);

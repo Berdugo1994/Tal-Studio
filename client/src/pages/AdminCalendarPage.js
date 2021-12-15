@@ -4,31 +4,39 @@ import PropTypes from "prop-types";
 import AdminCalendarComp from "../components/containers/pageComp/AdminCalendar";
 import { Redirect } from "react-router";
 import { INFO } from "../constants/materialTypes";
+import { friendshipsLoadAction } from "../actions/auth";
 
 //Actions
 import { setMessageAction } from "../actions/message";
 
-const AdminCalendarPage = ({ isLogged, setMessageAction }) => {
+const AdminCalendarPage = ({
+  isAdmin,
+  setMessageAction,
+  friendshipsLoadAction,
+}) => {
   useEffect(() => {
-    if (!isLogged) {
-      //TODO: check if admin
+    if (!isAdmin) {
       setMessageAction({
         status: INFO,
-        message: "על מנת לצפות בלוח שנה יש להתחבר",
+        message: "על מנת לצפות בלוח המנהל יש להיות מחובר כמנהל",
       });
+      return;
     }
+    friendshipsLoadAction();
   }, []);
-  return <>{!isLogged ? <Redirect to='/login' /> : <AdminCalendarComp />}</>;
+  return <>{!isAdmin ? <Redirect to='/home' /> : <AdminCalendarComp />}</>;
 };
 AdminCalendarPage.propTypes = {
-  isLogged: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   setMessageAction: PropTypes.func.isRequired,
+  friendshipsLoadAction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  isLogged: state.auth.isLoggedIn,
+  isAdmin: state.auth.isAdmin,
 });
 
-export default connect(mapStateToProps, { setMessageAction })(
-  AdminCalendarPage
-);
+export default connect(mapStateToProps, {
+  setMessageAction,
+  friendshipsLoadAction,
+})(AdminCalendarPage);
