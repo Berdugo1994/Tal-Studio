@@ -157,7 +157,8 @@ router.post(
         .then(() => {
           res.status(201).send("Forgot mail send succesfully");
         })
-        .catch(() => {
+        .catch((e) => {
+          console.log(e);
           next(createError(402, "בעיה בשולח המיילים, נא נסה שנית מאוחר יותר"));
         });
     } catch (err) {

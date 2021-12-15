@@ -102,7 +102,7 @@ async function totalEvents() {
     );
 
     promises.push(
-      TrainingsUtils.getNextAllTrainingsLastDays(14).then((trainings) => {
+      TrainingsUtils.getNextAllTrainingsLastDays(60).then((trainings) => {
         result.trainings = trainings; // it is not really invited, just a place to contain and keep the same logic.
       })
     );

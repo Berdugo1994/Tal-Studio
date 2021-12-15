@@ -48,6 +48,10 @@ function ContactForm({ contactAction }) {
       setNameHelper("אורך מינ' 2 תוים");
       return false;
     }
+    if (nameField.length > 16) {
+      setNameHelper("אורך מקס' 16 תוים");
+      return false;
+    }
     setNameHelper("");
     return true;
   }
@@ -58,6 +62,10 @@ function ContactForm({ contactAction }) {
     }
     if (nameField.length < 2) {
       setMessageHelper("אורך מינ' 2 תוים");
+      return false;
+    }
+    if (nameField.length > 60) {
+      setMessageHelper("אורך מקס' 60 תוים");
       return false;
     }
     setMessageHelper("");
@@ -159,6 +167,7 @@ function ContactForm({ contactAction }) {
                     onChange={onChange}
                     onlyRed={true}
                     // defaultValue={"היי, אני רוצה להתחיל להתאמן בסטודיו"}
+                    max_length={60}
                   />
                 )}
               />

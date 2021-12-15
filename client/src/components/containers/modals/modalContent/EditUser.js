@@ -73,6 +73,10 @@ function EditUser({ updateUserAction, validatePasswordAction, user }) {
       setEmailHelper(mandatory);
       return false;
     }
+    if (email.length > 24) {
+      setEmailHelper("אורך מקס' 24 תוים");
+      return false;
+    }
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(String(email).toLowerCase())) {
@@ -156,6 +160,10 @@ function EditUser({ updateUserAction, validatePasswordAction, user }) {
       setFirstHelper("אורך מינ' 2 תוים");
       return false;
     }
+    if (nameField.length > 12) {
+      setFirstHelper("אורך מקס' 12 תוים");
+      return false;
+    }
     setFirstHelper("");
     return true;
   }
@@ -166,6 +174,10 @@ function EditUser({ updateUserAction, validatePasswordAction, user }) {
     }
     if (nameField.length < 2) {
       setLastHelper("אורך מינ' 2 תוים");
+      return false;
+    }
+    if (nameField.length > 12) {
+      setLastHelper("אורך מקס' 12 תוים");
       return false;
     }
     setLastHelper("");

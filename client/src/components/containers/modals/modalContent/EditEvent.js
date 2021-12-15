@@ -39,6 +39,7 @@ function ModalEditEvent({
   const [third, setThird] = useState(null);
   const [thirdName, setThirdName] = useState(null);
   const [description, setDescription] = useState("");
+  const [notesHelper, setNotesHelper] = useState("");
   return (
     <div className='modal-event-container'>
       {display == "loading" ? (
@@ -105,9 +106,14 @@ function ModalEditEvent({
           <div className='modal-event-friend'>
             <InputText
               label='הערה'
-              helper={""}
+              helper={notesHelper}
               onChange={(change) => {
                 change ? setDescription(change) : setDescription("");
+                if (change.length > 20) {
+                  setNotesHelper("אורך מקסימלי 20");
+                } else {
+                  setNotesHelper("");
+                }
               }}
               defaultValue={defaultDescription}
             />
@@ -122,6 +128,13 @@ function ModalEditEvent({
                 setMessageAction({
                   status: ERROR,
                   message: "שמות המשתתפים אינם תקינים",
+                });
+                return;
+              }
+              if (notesHelper.length > 0) {
+                setMessageAction({
+                  status: ERROR,
+                  message: "אורך מקסימלי של הערה הוא 20",
                 });
                 return;
               }

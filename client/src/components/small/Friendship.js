@@ -95,12 +95,9 @@ const Friendship = ({
   const waitDelete = "wait-delete";
   useEffect(() => {
     if (modalStatus) return;
-    console.log("useeffect called");
     let timeout;
     if (!firstRender) {
-      console.log("before wait");
       timeout = setTimeout(() => {
-        console.log("after wait");
         friendshipsLoadAction();
       }, 2000);
     } else {
