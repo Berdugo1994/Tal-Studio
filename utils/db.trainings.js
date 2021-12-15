@@ -79,6 +79,25 @@ async function updateById(_id, object) {
   return Trainings.updateOne({ _id }, object);
 }
 
+async function getTrainingsBetweenRanges(start, finish) {
+  let events = await Trainings.find({
+    date: { $gte: start, $lte: finish },
+  });
+  return events;
+}
+
+async function validateEmptyOnTimes(events) {
+  //This validates there is no conflict in between,
+  //Enough one conflict to fail the whole action.
+  let first_event_start = events[0].date;
+  let last_event_start = events[events.length - 1].date;
+  let existsTrainings = await getTrainingsBetweenRanges(
+    first_event_start,
+    last_event_start
+  );
+  return existsTrainings.length == 0;
+}
+
 module.exports.getNextTrainingsById = getNextTrainingsById;
 module.exports.getNextAllTrainingsLastDays = getNextAllTrainingsLastDays;
 module.exports.getNextAllTrainings = getNextAllTrainings;
@@ -88,3 +107,4 @@ module.exports.deleteTrainingById = deleteTrainingById;
 module.exports.getNextTrainingByUserId = getNextTrainingByUserId;
 module.exports.getPastTrainingsThisMonthById = getPastTrainingsThisMonthById;
 module.exports.updateById = updateById;
+module.exports.validateEmptyOnTimes = validateEmptyOnTimes;

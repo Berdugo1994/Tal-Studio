@@ -281,11 +281,18 @@ function AddAvailable({ setMessageAction, adminAddAvailableAction }) {
           type='submit'
           content={"שמור"}
           submitClicked={() => {
-            adminAddAvailableAction(trainingList).then((res) => {
-              if (res) {
-                setKeySaved(keySaved + 1);
-              }
-            });
+            adminAddAvailableAction(trainingList)
+              .then((res) => {
+                if (res) {
+                  setKeySaved(keySaved + 1);
+                }
+              })
+              .catch(() => {
+                setMessageAction({
+                  status: ERROR,
+                  message: "שמירת האימונים נכשלה, יש לרענן ולנסות שוב",
+                });
+              });
           }}
           isDisabled={
             date == null ||

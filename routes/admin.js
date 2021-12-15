@@ -96,6 +96,20 @@ router.post(
           errors: errors.array(),
         });
       }
+      let promises = [
+        AvailableUtils.validateEmptyOnTimes(req.body.events),
+        TrainingsUtils.validateEmptyOnTimes(req.body.events),
+      ];
+      if (
+        //Tests there are no available and existing training on the time range.
+        //value[0]=false -> there are already available in the range
+        //value[1]=false -> there are already trainings in the range
+        !(await Promise.all(promises).then((values) => {
+          return values[0] && values[1];
+        }))
+      ) {
+        throw "There are already available/trainings in this range.";
+      }
       await AvailableUtils.insertEvents(req.body.events)
         .then(() => {
           res.status(201).send("האימונים הפנויים נשמרו בהצלחה");
