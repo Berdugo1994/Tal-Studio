@@ -18,7 +18,6 @@ function FriendWait({ friendId, firstname, lastname, phone }) {
 FriendWait.propTypes = {};
 
 const mapStateToProps = (state, props) => {
-  console.log(props);
   return {
     friendId: props.friend.id,
     firstname: props.friend.firstname,

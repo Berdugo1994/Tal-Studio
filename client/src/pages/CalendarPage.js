@@ -7,14 +7,21 @@ import { INFO } from "../constants/materialTypes";
 
 //Actions
 import { setMessageAction } from "../actions/message";
+import { friendshipsLoadAction } from "../actions/auth";
 
-const CalendarPage = ({ isLogged, setMessageAction }) => {
+const CalendarPage = ({
+  isLogged,
+  setMessageAction,
+  friendshipsLoadAction,
+}) => {
   useEffect(() => {
     if (!isLogged) {
       setMessageAction({
         status: INFO,
         message: "על מנת לצפות בלוח שנה יש להתחבר",
       });
+    } else {
+      friendshipsLoadAction();
     }
   }, []);
   return <>{!isLogged ? <Redirect to='/login' /> : <CalendarComp />}</>;
@@ -22,10 +29,14 @@ const CalendarPage = ({ isLogged, setMessageAction }) => {
 CalendarPage.propTypes = {
   isLogged: PropTypes.bool.isRequired,
   setMessageAction: PropTypes.func.isRequired,
+  friendshipsLoadAction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isLogged: state.auth.isLoggedIn,
 });
 
-export default connect(mapStateToProps, { setMessageAction })(CalendarPage);
+export default connect(mapStateToProps, {
+  setMessageAction,
+  friendshipsLoadAction,
+})(CalendarPage);

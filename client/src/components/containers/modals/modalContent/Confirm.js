@@ -29,7 +29,6 @@ function Confirm({ confirmFunc, discardFunc }) {
 Confirm.propTypes = {};
 
 const mapStateToProps = (state, props) => {
-  console.log(props);
   return {
     confirmFunc: props.confirmFunc,
     discardFunc: props.discardFunc,

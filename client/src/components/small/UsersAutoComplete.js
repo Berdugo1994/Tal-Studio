@@ -6,15 +6,18 @@ import { TextField } from "@material-ui/core";
 import { requestAllUsers } from "../../services/user.service";
 import { FormHelperText } from "@material-ui/core";
 
-function UsersAutoComplete({ onChange, helper, label, defaultValue }) {
+function UsersAutoComplete({ onChange, helper, label, defaultValue, friends }) {
   const usersStatic = [{ value: "טל פקלר", label: "טל פקלר", ...defaultValue }];
   const [users, setUsers] = useState(usersStatic);
   useEffect(() => {
-    let promiseUsers = requestAllUsers();
-    promiseUsers.then((data) => {
-      if (defaultValue) data.push(defaultValue);
-      setUsers(data);
+    let friends_to_select = [];
+    friends.map((f) => {
+      friends_to_select.push({
+        label: f.firstname + " " + f.lastname,
+        value: f.id,
+      });
     });
+    setUsers(friends_to_select);
     if (defaultValue) onChange(defaultValue);
   }, []);
 
@@ -58,5 +61,6 @@ const mapStateToProps = (state, ownProps) => ({
   helper: ownProps.helper,
   onChange: ownProps.onChange,
   defaultValue: ownProps.defaultValue,
+  friends: state.auth.friendships.friends_approved,
 });
 export default connect(mapStateToProps, {})(UsersAutoComplete);

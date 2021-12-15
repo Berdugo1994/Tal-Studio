@@ -80,7 +80,6 @@ export const Values = styled.div`
 `;
 export function UserProfileFull(props) {
   const [modalOpen, setModalOpen] = useState(false);
-  console.log(props.user.birthdate);
   let userBirthdate =
     props.user.birthdate.split("-")[2] +
     "/" +

@@ -56,6 +56,13 @@ function ForgotComp({ setMessageAction }) {
     }
   }
   function codeSubmit() {
+    if (codeHelper.length > 0) {
+      setMessageAction({
+        status: ERROR,
+        message: "יש להזין קוד תקין",
+      });
+      return;
+    }
     setStage("loading");
     forgotPassword_CodeApi({ email, code })
       .then(() => {
@@ -132,7 +139,11 @@ function ForgotComp({ setMessageAction }) {
   }
   function codeChanged(change) {
     change ? setCode(change) : setCode("");
-    setCodeHelper("");
+    if (change.length > 40) {
+      setCodeHelper("הקוד שהוזן ארוך מידי.");
+    } else {
+      setCodeHelper("");
+    }
   }
   function pass1Changed(change) {
     change.target.value ? setPass1(change.target.value) : setPass1("");

@@ -293,7 +293,6 @@ export const friendshipRespondAction = (respond) => (dispatch) => {
   );
 };
 export const friendshipAddAction = (request) => (dispatch) => {
-  console.log(request);
   return addFriendApi(request).then(
     (data) => {
       dispatch({
@@ -302,13 +301,10 @@ export const friendshipAddAction = (request) => (dispatch) => {
     },
     (err) => {
       let payload = { message: "" };
-      console.log("we are here");
       if (
         (err.response && err.response.status === 402) ||
         err.response.status === 408
       ) {
-        console.log("we are here2");
-        console.log(err.response.data);
         payload.message = err.response.data;
       } else if (err.response && err.response.status === 403) {
         payload.message = "עבר זמן מאז ההתחברות האחרונה.. יש להתחבר מחדש";
@@ -327,7 +323,6 @@ export const friendshipAddAction = (request) => (dispatch) => {
 };
 
 export const friendshipDeleteAction = (respond) => (dispatch) => {
-  console.log(respond);
   return deleteFriendApi(respond).then(
     (data) => {
       dispatch({
