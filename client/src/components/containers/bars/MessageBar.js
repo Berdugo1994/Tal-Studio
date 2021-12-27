@@ -24,7 +24,7 @@ function MessageBar({
 }) {
   const classes = useStyles();
   useEffect(() => {
-    const delay = 5;
+    const delay = 2;
     let timer1 = setTimeout(() => clearMessageAction(), delay * 1000);
     return () => {
       clearTimeout(timer1);

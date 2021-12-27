@@ -82,7 +82,7 @@ function RightNav({
           </Styles.RightNavLink>
         </>
       )}
-      {isLogged && (
+      {isLogged && !isAdmin && (
         <>
           <Styles.RightNavLink
             to='/calendar'
@@ -93,6 +93,10 @@ function RightNav({
             <BsCalendar />
             <li>אימונים</li>
           </Styles.RightNavLink>
+        </>
+      )}
+      {isLogged && (
+        <>
           <Styles.RightNavLink
             to='/profile'
             onClick={() => {

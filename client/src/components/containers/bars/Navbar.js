@@ -67,11 +67,15 @@ const Navbar = ({ isLogged, isAdmin }) => {
                 <NavLink to='/gallery'>גלריה</NavLink>
               </>
             )}
-            {isLogged && (
+            {isLogged && !isAdmin && (
               <>
                 <NavBtn>
                   <NavBtnLink to='/calendar'>אימונים</NavBtnLink>
                 </NavBtn>
+              </>
+            )}
+            {isLogged && (
+              <>
                 <NavLink to='/profile'>פרופיל</NavLink>
                 <NavLink to='/gallery'>גלריה</NavLink>
               </>

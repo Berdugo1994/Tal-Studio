@@ -95,10 +95,10 @@ function LoginComp({ loginAction }) {
   }
   return (
     <div id='login-comp-container' className='form-container-login'>
-      <div className={loading}>
+      <div className='textfit-title form-title'>התחברות</div>
+      <div className={loading} style={{ marginTop: "10%" }}>
         <LoadingRings />
       </div>
-      <div className='textfit-title form-title'>התחברות</div>
       <div className={forming}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='login-box'>

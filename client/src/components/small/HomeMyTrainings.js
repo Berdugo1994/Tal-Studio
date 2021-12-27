@@ -130,7 +130,7 @@ function Item(props) {
         <Card>
           <CardContent>
             <div className='count-up-container'>
-              <div className='text-fit-medium'>אימונים החודש</div>
+              <div className='text-fit-medium'>התאמנתי החודש</div>
               <CountUp start={0} duration={1} end={props.trainingsThisMonth}>
                 {({ countUpRef, start }) => (
                   <VisibilitySensor

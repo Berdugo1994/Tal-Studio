@@ -131,7 +131,7 @@ function CalendarComp({ requestEvents, events }) {
       <FullCalendar
         locale={"he"}
         direction={"rtl"}
-        dayMaxEvents={3}
+        dayMaxEvents={5}
         contentHeight='auto'
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
@@ -156,7 +156,6 @@ function CalendarComp({ requestEvents, events }) {
           today: "היום",
           month: "חודש",
           week: "שבוע",
-          sun: "ראשון",
         }}
         eventTimeFormat={{
           hour: "2-digit",
