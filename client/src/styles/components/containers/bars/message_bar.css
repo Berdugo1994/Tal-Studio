@@ -7,11 +7,11 @@
   top: 0px;
   left: 0;
   z-index: 21;
-  -webkit-animation: fadeinout forwards 5s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadeinout forwards 5s; /* Firefox < 16 */
-  -ms-animation: fadeinout forwards 5s; /* Internet Explorer */
-  -o-animation: fadeinout forwards 5s; /* Opera < 12.1 */
-  animation: fadeinout forwards 5s;
+  -webkit-animation: fadeinout forwards 2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadeinout forwards 2s; /* Firefox < 16 */
+  -ms-animation: fadeinout forwards 2s; /* Internet Explorer */
+  -o-animation: fadeinout forwards 2s; /* Opera < 12.1 */
+  animation: fadeinout forwards 2s;
 }
 
 @keyframes fadeinout {
