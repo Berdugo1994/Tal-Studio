@@ -7,7 +7,7 @@
 }
 .carousel-card-title {
   font-size: 5rem;
-  color: #f5cac3;
+  color: #b15555;
   /* -webkit-text-stroke: 1px #84a59d; */
   margin: 0;
   font-family: "Bebas Neue", cursive;
@@ -16,7 +16,7 @@
 }
 .carousel-card-body {
   font-size: 2.5rem;
-  color: #f5cac3;
+  color: #b15555;
   margin: 0;
   font-family: "Bebas Neue", cursive;
   /* -webkit-text-stroke: 0.5px #84a59d; */

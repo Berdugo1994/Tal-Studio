@@ -13,12 +13,22 @@ const HomeCarousel = (props) => {
     {
       name: "TAL STUDIO",
       description: "healthy addiction",
-      img: "./assets/images/homePage/1000/talstudio.png",
+      img: "./assets/images/homePage/1000/tal_s1.png",
     },
     {
-      name: "Tal Studio",
+      name: "TAL STUDIO",
       description: "healthy addiction",
-      img: "./assets/images/homePage/1000/kick.png",
+      img: "./assets/images/homePage/1000/tal_s2.png",
+    },
+    {
+      name: "TAL STUDIO",
+      description: "healthy addiction",
+      img: "./assets/images/homePage/1000/tal_s3.png",
+    },
+    {
+      name: "TAL STUDIO",
+      description: "healthy addiction",
+      img: "./assets/images/homePage/1000/tal_s4.png",
     },
   ];
   const [images, setImages] = useState(firstImages);
