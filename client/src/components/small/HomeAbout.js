@@ -8,7 +8,7 @@ const HomeAbout = (props) => {
   return (
     <div className='card-about-container'>
       <h1>
-        <div className='card-title'>טל סטודיו</div>
+        <div className='card-title'>TAL STUDIO</div>
       </h1>
       <div className='card-body'>
         טל פקלר מאמנת אישית. סטודיו בוטיקי, לאימונים פונקציונליים בקבוצות קטנות,
