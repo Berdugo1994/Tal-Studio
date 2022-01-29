@@ -10,7 +10,7 @@ const GalleryPage = () => {
   function loadPhotos() {
     const urlParams = {
       api_key: "f785e54a6ca2ee9c8975c336aec7fd48",
-      photoset_id: "72157719922265332",
+      photoset_id: "72177720296285016",
       user_id: "194029309@N02",
       format: "json",
       per_page: "120",
