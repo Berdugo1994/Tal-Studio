@@ -20,9 +20,7 @@ export function requestEventsInRange() {
 
 export function reserveTraining(request) {
   const URL = API_URL + "user/addtraining";
-  return axios.post(URL, request).then((data) => {
-    return Promise.resolve(data);
-  });
+  return axios.post(URL, request);
 }
 
 export function getMyNextTraining() {

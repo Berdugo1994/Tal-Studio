@@ -53,7 +53,8 @@ async function saveTraining(
   participant_ids,
   participant_names,
   description,
-  date
+  date,
+  session
 ) {
   const trainingToSave = new Trainings({
     participant_ids,
@@ -61,18 +62,11 @@ async function saveTraining(
     description,
     date,
   });
-  return trainingToSave
-    .save()
-    .then(() => {
-      Promise.resolve();
-    })
-    .catch(() => {
-      Promise.reject();
-    });
+  return trainingToSave.save({ session });
 }
-async function deleteTrainingById(_id) {
+async function deleteTrainingById(_id, session) {
   let training = await Trainings.findOne({ _id });
-  return training.remove().then(Promise.resolve(training._doc.date));
+  return training.remove({ session }).then(Promise.resolve(training._doc.date));
 }
 
 async function updateById(_id, object) {
