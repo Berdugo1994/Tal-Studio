@@ -10,6 +10,9 @@ const TrainingsUtils = require("../utils/db.trainings");
 const FriendsUtils = require("../utils/db.friends");
 const error = require("../errors");
 
+// Mongoose - for Session create
+const mongoose = require("mongoose");
+
 //MIDDLEWARE
 const loggedMW = require("./middleware/mid_logged");
 
@@ -56,27 +59,23 @@ router.post(
       });
     }
     const { id, participant_ids, participant_names, description } = req.body;
+    const session = await mongoose.connection.startSession();
     try {
+      session.startTransaction();
       const event = await AvailableUtils.getEventById(id);
       await TrainingsUtils.saveTraining(
         participant_ids,
         participant_names,
         description,
-        event._doc.date
-      )
-        .then(() => {
-          AvailableUtils.deleteEventById(id)
-            .then(() => {
-              res.status(201).send("Training created successfully");
-            })
-            .catch((err) => {
-              next(err);
-            });
-        })
-        .catch((err) => {
-          next(err);
-        });
+        event._doc.date,
+        session
+      );
+      await AvailableUtils.deleteEventById(id, session);
+      await session.commitTransaction();
+      res.status(201).send("Training created successfully");
     } catch (err) {
+      console.log("Abort Transaction");
+      await session.abortTransaction();
       next(createError(401, "Cannot create training"));
       return;
     }
@@ -89,33 +88,17 @@ router.post(
  * @description -Trainer cancels the training, and make it available again.
  */
 router.post("/canceltraining", async (req, res, next) => {
-  const event_id = req.body.id;
-  try {
-    await TrainingsUtils.deleteTrainingById(event_id).then((date) => {
-      AvailableUtils.insertEvent(date).then(() => {
-        res.status(200).send("Training deleted successfully");
-      });
-    });
-  } catch (err) {
-    next(createError(401, "פעולת ביטול האימון נכשלה, נא צרו איתי קשר"));
-    return;
-  }
-});
-
-/**
- * @method - POST
- * @param - /canceltraining
- * @description -Trainer cancels the training, and make it available again.
- */
-router.post("/canceltraining", async (req, res, next) => {
+  const session = await mongoose.connection.startSession();
   try {
     const event_id = req.body.id;
-    await TrainingsUtils.deleteTrainingById(event_id).then((date) => {
-      AvailableUtils.insertEvent(date).then(() => {
-        res.status(200).send("Training deleted successfully");
-      });
-    });
+    session.startTransaction();
+    const date = await TrainingsUtils.deleteTrainingById(event_id, session);
+    await AvailableUtils.insertEvent(date, session);
+    session.commitTransaction();
+    res.status(200).send("Training deleted successfully");
   } catch (err) {
+    console.log("Abort Transaction");
+    await session.abortTransaction();
     next(createError(401, "פעולת ביטול האימון נכשלה, נא צרו איתי קשר"));
     return;
   }

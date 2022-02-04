@@ -41,12 +41,12 @@ async function insertEvents(events) {
   }
 }
 
-async function insertEvent(date) {
+async function insertEvent(date, session) {
   return new EventAvailable({
     date: date._doc.date,
     description: "",
     title: "פנוי",
-  }).save();
+  }).save({ session });
 }
 
 async function getNextEvents() {
@@ -54,8 +54,8 @@ async function getNextEvents() {
     date: { $gte: new Date() },
   });
 }
-async function deleteEventById(_id) {
-  return EventAvailable.deleteOne({ _id });
+async function deleteEventById(_id, session) {
+  return EventAvailable.deleteOne({ _id }, { session });
 }
 async function getAvailableBetweenRanges(start, finish) {
   let events = await EventAvailable.find({

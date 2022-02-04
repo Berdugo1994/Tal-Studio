@@ -251,6 +251,42 @@ function Register({ registerAction }) {
           <div className='single-small'>
             <Controller
               control={control}
+              name='firstname'
+              rules={{
+                validate: {
+                  checkFirstName: (v) => validateFirstName(v),
+                },
+              }}
+              render={({ field: { onChange, value } }) => (
+                <InputText
+                  helper={firstHelper}
+                  label='שם פרטי'
+                  onChange={onChange}
+                />
+              )}
+            />
+          </div>
+          <div className='single-small'>
+            <Controller
+              control={control}
+              name='lastname'
+              rules={{
+                validate: {
+                  checkLastName: (v) => validateLastName(v),
+                },
+              }}
+              render={({ field: { onChange, value } }) => (
+                <InputText
+                  helper={lastHelper}
+                  label='שם משפחה'
+                  onChange={onChange}
+                />
+              )}
+            />
+          </div>
+          <div className='single-small'>
+            <Controller
+              control={control}
               name='phone'
               rules={{
                 validate: {
@@ -321,43 +357,6 @@ function Register({ registerAction }) {
                     onChange(e);
                   }}
                   value={value}
-                />
-              )}
-            />
-          </div>
-
-          <div className='single-small'>
-            <Controller
-              control={control}
-              name='firstname'
-              rules={{
-                validate: {
-                  checkFirstName: (v) => validateFirstName(v),
-                },
-              }}
-              render={({ field: { onChange, value } }) => (
-                <InputText
-                  helper={firstHelper}
-                  label='שם פרטי'
-                  onChange={onChange}
-                />
-              )}
-            />
-          </div>
-          <div className='single-small'>
-            <Controller
-              control={control}
-              name='lastname'
-              rules={{
-                validate: {
-                  checkLastName: (v) => validateLastName(v),
-                },
-              }}
-              render={({ field: { onChange, value } }) => (
-                <InputText
-                  helper={lastHelper}
-                  label='שם משפחה'
-                  onChange={onChange}
                 />
               )}
             />

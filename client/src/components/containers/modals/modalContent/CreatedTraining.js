@@ -17,8 +17,8 @@ function ModalCreatedTraining({
   description,
   cancelTrainingAction,
   isAdmin,
-  event,
   changeToEditMode,
+  handleClose,
 }) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);

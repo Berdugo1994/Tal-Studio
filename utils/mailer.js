@@ -1,14 +1,16 @@
 const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  requireTLS: true,
+  auth: {
+    user: "talstudio95@gmail.com",
+    pass: process.env.emailPassword,
+  },
+});
 async function SendEmailContact(name, phone, message) {
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: "talstudio95@gmail.com",
-      pass: process.env.emailPassword,
-    },
-  });
   let text =
     "שם: " + name + "\n" + "פלאפון: " + phone + "\n" + "הודעה: " + message;
   const mailOptions = {
@@ -20,17 +22,7 @@ async function SendEmailContact(name, phone, message) {
   };
   return transporter.sendMail(mailOptions);
 }
-
 async function SendEmailForgot(user, forgotToken) {
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: "talstudio95@gmail.com",
-      pass: process.env.emailPassword,
-    },
-  });
   let text = `
       <p>שלום ${user.firstname},</p>
       <p>ביקשת לשחזר את סיסמתך.</p>
@@ -42,7 +34,6 @@ async function SendEmailForgot(user, forgotToken) {
   const mailOptions = {
     from: "talstudio95@gmail.com",
     to: user.email,
-    // to: "talstudio95@gmail.com", // Test !!
     subject: "טל סטודיו - שחזור סיסמה",
     html: `<div dir='rtl'>${text}</div>`,
   };
@@ -50,14 +41,6 @@ async function SendEmailForgot(user, forgotToken) {
 }
 
 async function SendChangePasswordForgotSuccess(user) {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "talstudio95@gmail.com",
-      pass: process.env.emailPassword,
-    },
-  });
-
   let text = `
       <p>שלום ${user.firstname},</p>
       <p>סיסמתך שונתה בהצלחה.</p>
@@ -66,7 +49,6 @@ async function SendChangePasswordForgotSuccess(user) {
   const mailOptions = {
     from: "talstudio95@gmail.com",
     to: user.email,
-    // to: "talstudio95@gmail.com", // Test !!
     subject: "טל סטודיו - סיסמתך שוחזרה בהצלחה",
     html: `<div dir='rtl'>${text}</div>;`,
   };
@@ -74,14 +56,6 @@ async function SendChangePasswordForgotSuccess(user) {
 }
 
 async function SendUserRegisterSuccess(email, firstname) {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "talstudio95@gmail.com",
-      pass: process.env.emailPassword,
-    },
-  });
-
   let text = `
       <p>שלום ${firstname},</p>
       <p>ברוכים הבאים לטל סטודיו!</p>

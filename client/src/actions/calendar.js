@@ -30,14 +30,19 @@ export const requestEvents = () => {
 
 export const reserveUserTraining = (req) => {
   return (dispatch) => {
-    return reserveTraining(req).then((plainEventObjects) => {
-      return requestEventsInRange().then((plainEventObjects) => {
-        dispatch({
-          type: "RECEIVE_EVENTS",
-          plainEventObjects,
+    return reserveTraining(req)
+      .then(() => {
+        return requestEventsInRange().then((plainEventObjects) => {
+          dispatch({
+            type: "RECEIVE_EVENTS",
+            plainEventObjects,
+          });
         });
+      })
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
       });
-    });
   };
 };
 
@@ -58,6 +63,8 @@ export const cancelTrainingAction = (req) => {
   return (dispatch) => {
     return cancelTraining(req).then(
       (data) => {
+        console.log("data is " + data);
+        console.log("data is " + data.status);
         if (data.status === 200) {
           // dispatch({
           //   type: TRAINING_DELETED_SUCCESSFULLY,
@@ -66,6 +73,8 @@ export const cancelTrainingAction = (req) => {
         }
       },
       (err) => {
+        console.log("err is " + err);
+        console.log("err is " + err.status);
         let payload = { message: "" };
         if (
           err.response &&
@@ -83,6 +92,7 @@ export const cancelTrainingAction = (req) => {
             payload: payload,
           });
         }
+        return Promise.reject();
       }
     );
   };
