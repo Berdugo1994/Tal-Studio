@@ -76,7 +76,7 @@ function Item(props) {
     <div
       className='card-my-trainings-container'
       style={{
-        backgroundImage: 'url("./assets/images/homePage/1000/clock.jpg")',
+        backgroundImage: 'url("./assets/images/homePage/comp/clock.jpg")',
       }}
     >
       <div style={{ width: "35%", marginRight: "2%" }}>
