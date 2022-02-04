@@ -13,6 +13,9 @@ const TrainingsUtils = require("../utils/db.trainings");
 const events = require("./events");
 const error = require("../errors");
 
+//Semi-Mutex multi savings to add available impossible
+let alreadyAddingAvailable = false;
+
 function sortAndSplitDays(trainings, available) {
   let datesEventsObject = {};
   let total = [];
@@ -90,8 +93,15 @@ router.post(
   [check("events").custom((events) => Array.isArray(events) && events.length)],
   async (req, res, next) => {
     try {
+      if (alreadyAddingAvailable) {
+        next(error.cant_save_available_already_in_process_403);
+        return;
+      }
+      alreadyAddingAvailable = true;
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
+        //TODO: throw informative error instead.
+        alreadyAddingAvailable = false;
         return res.status(400).json({
           errors: errors.array(),
         });
@@ -113,11 +123,13 @@ router.post(
       await AvailableUtils.insertEvents(req.body.events)
         .then(() => {
           res.status(201).send("האימונים הפנויים נשמרו בהצלחה");
+          alreadyAddingAvailable = false;
         })
         .catch((err) => {
-          next(err);
+          throw "Insertion failed";
         });
     } catch (err) {
+      alreadyAddingAvailable = false;
       next(error.cant_save_available_403);
       return;
     }

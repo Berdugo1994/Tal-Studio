@@ -53,6 +53,10 @@ const friend_delete_not_friends_402 = createError(
 
 //403
 const cant_save_available_403 = createError(403, "שמירת אימונים פנויים נכשלה");
+const cant_save_available_already_in_process_403 = createError(
+  403,
+  "בקשת השמירה הקודמת עוד לא הסתיימה. יש לנסות שוב מאוחר יותר"
+);
 
 //408
 const email_not_exists_408 = createError(408, "לא נמצא חשבון עם המייל הזה");
@@ -101,6 +105,8 @@ module.exports.friend_respond_failed_402 = friend_respond_failed_402;
 module.exports.friend_delete_not_friends_402 = friend_delete_not_friends_402;
 
 module.exports.cant_save_available_403 = cant_save_available_403;
+module.exports.cant_save_available_already_in_process_403 =
+  cant_save_available_already_in_process_403;
 
 module.exports.email_not_exists_408 = email_not_exists_408;
 module.exports.phone_not_exists_408 = phone_not_exists_408;

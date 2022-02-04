@@ -16,6 +16,10 @@ const mongoose = require("mongoose");
 //MIDDLEWARE
 const loggedMW = require("./middleware/mid_logged");
 
+//Mutex - Prevent conflict in addtraining
+var Mutex = require("async-mutex").Mutex;
+const mutex = new Mutex();
+
 router.use(loggedMW); // **LOGGED USER BELOW**
 /**
  * @method - GET
@@ -60,6 +64,7 @@ router.post(
     }
     const { id, participant_ids, participant_names, description } = req.body;
     const session = await mongoose.connection.startSession();
+    const release = await mutex.acquire();
     try {
       session.startTransaction();
       const event = await AvailableUtils.getEventById(id);
@@ -78,6 +83,8 @@ router.post(
       await session.abortTransaction();
       next(createError(401, "Cannot create training"));
       return;
+    } finally {
+      release();
     }
   }
 );
