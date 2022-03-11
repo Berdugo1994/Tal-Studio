@@ -6,7 +6,7 @@
 •	cmd: npm run install_both  
 •	Make sure docker daemon is running(software is running)  
 •	docker build . -t tal_studio:localhost  
-•	docker run -p 8080:8080 tal_studio:localhost  
+•	docker run -e NODE_ENV="dev" -p 8080:8080 tal_studio:localhost  
 •	localhost:8080 
 
 ### PRODUCTION: AWS
