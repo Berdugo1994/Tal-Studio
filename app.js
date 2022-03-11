@@ -17,7 +17,7 @@ const https = require("https");
 var cors = require("cors");
 const session = require("client-sessions");
 const port = process.env.PORT;
-const is_production = process.env.NODE_ENV == "aws";
+const is_production = process.env.NODE_ENV == "production";
 if (process.env.USING_INTERNET == "true") {
   connectDB();
 } else {
@@ -37,7 +37,7 @@ app.use(
     stream: fs.createWriteStream("./access.log", { flags: "a" }),
   })
 );
-is_production ? app.use(logger("combined")) : app.use(logger("dev"));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -74,7 +74,11 @@ app.use(function (req, res, next) {
   next(error.general_error_410);
 });
 app.listen(port, () => {
-  console.log(`${process.env.NODE_ENV} Server runs on port ${port}`);
+  console.log(
+    `${
+      process.env.NODE_ENV == "production" ? "AWS" : "dev"
+    } Server runs on port ${port}`
+  );
 });
 app.use(function (err, req, res, next) {
   if (err.message) {
