@@ -12,23 +12,12 @@ var adminRoute = require("./routes/admin");
 var userRoute = require("./routes/user");
 var fs = require("fs");
 const error = require("./errors");
-const production = process.env.NODE_ENV === "production";
-var sshKey, cert, ca, options;
-if (production) {
-  sshKey = fs.readFileSync(__dirname + "/../ssl/tf_private.key");
-  cert = fs.readFileSync(__dirname + "/../ssl/tf_certificate.crt");
-  ca = fs.readFileSync(__dirname + "/../ssl/tf_ca_bundle.crt");
-  options = {
-    key: sshKey,
-    cert: cert,
-    ca: ca,
-  };
-}
 var http = require("http");
 const https = require("https");
 var cors = require("cors");
 const session = require("client-sessions");
 const port = process.env.PORT;
+const is_production = process.env.NODE_ENV == "aws";
 if (process.env.USING_INTERNET == "true") {
   connectDB();
 } else {
@@ -48,7 +37,7 @@ app.use(
     stream: fs.createWriteStream("./access.log", { flags: "a" }),
   })
 );
-app.use(logger("dev"));
+is_production ? app.use(logger("combined")) : app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -60,8 +49,9 @@ app.use(
     duration: 30 * 24 * 60 * 60 * 1000, // expired after 20 sec
     activeDuration: 1000 * 60 * 5, // if expiresIn < activeDuration,
     cookie: {
-      httpOnly: production,
-      secure: production,
+      httpOnly: is_production,
+      secure: false,
+      secureProxy: is_production,
     },
   })
 );
@@ -76,43 +66,24 @@ app.use("/api/trainings", trainingsRoute);
 app.use("/api/events", eventRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/user", userRoute);
-app.get("*", (req, res) => {
+app.get("*", (_, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 // this middleware handles undefined errors. must check.
 app.use(function (req, res, next) {
   next(error.general_error_410);
 });
-if (production) {
-  //HTTP LISTENS ON 80
-  http
-    .createServer(function (req, res) {
-      res.writeHead(301, {
-        Location: "https://" + req.headers["host"] + req.url,
-      });
-      res.end();
-    })
-    .listen(80);
-
-  //HTTPS LISTENS ON 443
-  https.createServer(options, app).listen(443, () => {
-    console.log(`PRODUCTION HTTPS Server runs on ${process.env.PROD_IP}:443`);
-  });
-} else if (process.env.LAN == "true") {
-  app.listen(port, process.env.MYIP, () => {
-    console.log(`Server runs on LAN listen on ${process.env.MYIP}:${port}`);
-  });
-} else {
-  app.listen(port, () => {
-    console.log(`DEV Server listen on port ${port}`);
-  });
-}
+app.listen(port, () => {
+  console.log(`${process.env.NODE_ENV} Server runs on port ${port}`);
+});
 app.use(function (err, req, res, next) {
   if (err.message) {
-    console.error("******************" + err.message + "******************");
-    console.error("url: " + req.url);
-    console.error("body: ");
-    console.error(req.body);
+    if (err.message !== "פרטי התחברות שגויים") {
+      console.error("******************" + err.message + "******************");
+      console.error("url: " + req.url);
+      console.error("body: ");
+      console.error(req.body);
+    }
   }
 
   console.error(err);
