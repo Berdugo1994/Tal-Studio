@@ -1,6 +1,8 @@
 # Tal-Studio
 
 ## Visit https://talfekler.com
+
+
 ## Start the app Local via installing(without using docker)
 •	clone the repo  
 •	create a .env file in the root directory (look at the bottom of this readme)  
@@ -11,7 +13,7 @@
 That's All!  
 
 
-### DEV:(using docker)
+## DEV:(using docker)
 •	cd C:\...\TalStudio  
 •	cmd: npm run install_both  
 •	create a .env file in the root directory (look at the bottom of this readme), make sure NODE_ENV="dev" 
@@ -20,35 +22,35 @@ That's All!
 •	in your browser hit `localhost:<NODE_DOCKER_PORT>` (the value from .env file. i.e `localhost:8080`)  
 That's All!
 
-### PRODUCTION on AWS: prepare, deploy, clone and run.
-## Prepare:
+## PRODUCTION on AWS: prepare, deploy, clone and run.
+### Prepare:
 •	cd C:\...\TalStudio  
 •	cmd: npm run install_both  
 •	docker-compose build
 •<b>	test locally</b>  
 docker-compose up  
 google chrome -> localhost:8080  
-## Deploy:
+### Deploy:
 •	if you’re not logged in then:  
 o	cmd: docker login
 o	username: ---------  
 o	password: ---------  
 •	docker tag tal_studio berdugogo/tal_studio:aws  
 •	docker push berdugogo/tal_studio:aws  
-## Clone:  
-###	at MobaXterm (or any other ssh connect to host)  
+### Clone:  
+####	at MobaXterm (or any other ssh connect to host)  
 •	MobaXterm: login to my ec2 using ssh. Insert private key in software.  
 •	Bash: docker login(same as in previous steps)  
 •	create a .env file in the root directory (look at the bottom of this readme)  
 •	clone the docker-compose.yaml file from this repo to the root directory.  
 •	Bash: docker-compose pull  
-## RUN:
+### RUN:
 •	docker-compose up  
 That's All!  
 
 
 
-### .env file structure(*values are EXAMPLE!*):
+## .env file structure(*values are EXAMPLE!*):
 ``` NODE_ENV=dev  
 MONGO_URI=mongodb+srv://<username>:<password>@<cluster-name>.z9epz.mongodb.net/<db_name>?retryWrites=true&w=majority  
 SALT=<salt number you desire>
