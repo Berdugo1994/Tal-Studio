@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
   requireTLS: true,
   auth: {
     user: "talstudio95@gmail.com",
-    pass: process.env.emailPassword,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 async function SendEmailContact(name, phone, message) {

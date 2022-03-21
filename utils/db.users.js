@@ -35,7 +35,7 @@ async function getUserWithPhoneAndFilter(phone, filter) {
 }
 
 async function updateUserPasswordById(_id, password) {
-  const hash = await bcrypt.hash(password, Number(process.env.salt));
+  const hash = await bcrypt.hash(password, Number(process.env.SALT));
   return Users.updateOne({ _id }, { $set: { password: hash } });
 }
 async function updateById(_id, object) {

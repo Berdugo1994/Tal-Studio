@@ -16,7 +16,7 @@ var http = require("http");
 const https = require("https");
 var cors = require("cors");
 const session = require("client-sessions");
-const port = process.env.PORT;
+const port = process.env.NODE_DOCKER_PORT;
 const is_production = process.env.NODE_ENV == "production";
 if (process.env.USING_INTERNET == "true") {
   connectDB();
@@ -71,6 +71,7 @@ app.get("*", (_, res) => {
 });
 // this middleware handles undefined errors. must check.
 app.use(function (req, res, next) {
+  console.log(req);
   next(error.general_error_410);
 });
 app.listen(port, () => {

@@ -84,7 +84,7 @@ router.post(
         next(error.phone_exists_409);
         return;
       }
-      const salt = await bcrypt.genSalt(parseInt(process.env.salt));
+      const salt = await bcrypt.genSalt(parseInt(process.env.SALT));
       const passwordEncrypted = await bcrypt.hash(password, salt);
       req.body.password = passwordEncrypted;
       req.body.createdAt = new Date();
@@ -325,7 +325,7 @@ router.put(
           return next(error.phone_exists_409);
         }
       }
-      const salt = await bcrypt.genSalt(parseInt(process.env.salt));
+      const salt = await bcrypt.genSalt(parseInt(process.env.SALT));
       const passwordEncrypted = await bcrypt.hash(password, salt);
       req.body.password = passwordEncrypted;
       req.body.updatedAt = new Date();

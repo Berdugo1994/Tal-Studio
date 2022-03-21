@@ -10,7 +10,7 @@ async function delTokenById(user_id) {
 
 async function createTokenById(_id) {
   let resetToken = crypto.randomBytes(16).toString("hex");
-  const hash = await bcrypt.hash(resetToken, Number(process.env.salt));
+  const hash = await bcrypt.hash(resetToken, Number(process.env.SALT));
   await new Token({
     user_id: _id,
     token: hash,
